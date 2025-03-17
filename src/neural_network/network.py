@@ -1,12 +1,12 @@
 import numpy as np
-from scipy.special import expit
+from .activation_functions import ACTIVATIONS
 
 """
 Implementação baseada no livro "Make Your Own Neural Network" de Tariq Rashid, 
 com adaptações específicas para atender às necessidades do projeto.
 
 - Ajustes na inicialização dos pesos e bias.
-- Uso de funções de ativação configuráveis (sigmoid e ReLU).
+- Uso de funções de ativação configuráveis.
 - Estrutura modular para facilitar expansão e manutenção.
 - Melhorias na legibilidade e organização do código.
 - Validação dos pesos e bias fornecidos.
@@ -17,19 +17,6 @@ o ChatGPT para otimização e refinamento de trechos específicos.
 Autor: Renato Calabro
 """
 
-def sigmoid(x):
-    """Função de ativação Sigmoid."""
-    return expit(x)
-
-def relu(x):
-    """Função de ativação ReLU."""
-    return np.maximum(0, x)
-
-# Dicionário com funções de ativação suportadas.
-ACTIVATIONS = {
-    "sigmoid": sigmoid,
-    "relu": relu
-}
 
 class NeuralNetwork:
     def __init__(self,
@@ -47,7 +34,7 @@ class NeuralNetwork:
         - input_layer: Número de neurônios na camada de entrada.
         - hidden_layers: Lista contendo o número de neurônios em cada camada oculta. Ex: [6, 6].
         - output_layer: Número de neurônios na camada de saída.
-        - activation: Tipo de função de ativação ("sigmoid" ou "relu").
+        - activation: Tipo de função de ativação.
         - learning_rate: Taxa de aprendizado (padrão=0.1).
         - weights: Lista opcional de matrizes numpy para os pesos (se None, inicializa aleatório).
         - biases: Lista opcional de vetores numpy para os biases (se None, inicializa aleatório).
