@@ -1,1 +1,41 @@
+# Bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Arquivos de ambiente virtual
+venv/
+ENV/
+env/
+.venv/
+
+# Arquivos do PyCharm/IDE
 .idea/
+
+# Arquivos do Visual Studio Code
+.vscode/
+
+# Arquivos de log
+*.log
+
+# Arquivos de banco de dados SQLite
+*.sqlite3
+*.db
+
+# Arquivos temporários
+*.swp
+*.swo
+
+# Arquivos de teste
+.coverage
+nosetests.xml
+tox.ini
+
+# Arquivos de cache de pacotes
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Outros arquivos ocultos
+*.env
+*.env.*
+*.envrc
