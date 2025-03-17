@@ -4,6 +4,20 @@ import matplotlib.cm as cm
 import matplotlib.colors as mcolors
 import mplcursors  # Para tooltips interativos
 
+"""
+Código gerado inicialmente pelo ChatGPT e posteriormente modificado manualmente para ajustes específicos.
+
+- Implementação original da visualização de redes neurais com matplotlib.
+- Adição de tooltips interativos para exibição de pesos e bias ao passar o mouse.
+- Ajustes no layout para otimização do espaço e melhor organização visual.
+- Alterações na lógica de exibição para garantir que os tooltips apareçam apenas ao passar sobre as conexões.
+
+Desenvolvido com base nos requisitos do usuário, mantendo um código claro, modular e interativo.
+
+Autor: Renato Calabro
+"""
+
+
 def plot_network(nn,
                  x_input,
                  width=1400,
@@ -73,7 +87,7 @@ def plot_network(nn,
     all_activations = np.concatenate([a.flatten() for a in activations_per_layer])
     a_min, a_max = all_activations.min(), all_activations.max()
 
-    ax.set_title(f"NeuralNetwork: {title}\nweight: cor | bias: opacidade")
+    ax.set_title(f"{title}\nweight: cor | bias: opacidade")
 
     neuron_positions = []
     gray_cmap = cm.get_cmap('Greys_r')

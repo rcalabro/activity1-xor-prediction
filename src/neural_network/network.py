@@ -1,6 +1,22 @@
 import numpy as np
 from scipy.special import expit
 
+"""
+Implementação baseada no livro "Make Your Own Neural Network" de Tariq Rashid, 
+com adaptações específicas para atender às necessidades do projeto.
+
+- Ajustes na inicialização dos pesos e bias.
+- Uso de funções de ativação configuráveis (sigmoid e ReLU).
+- Estrutura modular para facilitar expansão e manutenção.
+- Melhorias na legibilidade e organização do código.
+
+Alterações foram feitas manualmente conforme necessidade, utilizando pontualmente 
+o ChatGPT para otimização e refinamento de trechos específicos.
+
+Autor: Renato Calabro
+"""
+
+
 def sigmoid(x):
     """Função de ativação Sigmoid."""
     return expit(x)
