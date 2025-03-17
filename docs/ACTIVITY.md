@@ -29,7 +29,7 @@ Uma porta lógica XOR (Figura 1) é amplamente utilizada em circuitos eletrônic
 
 #### Figura 1: Função lógica XOR.
 
-[Figura 1: Função lógica XOR](./assets/fig_1.png)
+![Figura 1: Função lógica XOR](./assets/fig_1.png)
 
 #### Figura 2: Alternativa à porta lógica XOR com o mesmo resultado.
 
