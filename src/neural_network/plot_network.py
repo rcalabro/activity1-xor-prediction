@@ -123,6 +123,7 @@ def plot_network(nn,
     # ========== Plotar conexões ==========
     cmap_arrows = cm.get_cmap('RdYlGn')
     arrows = []
+    epsilon = 1e-9  # 🔹 Pequeno deslocamento para evitar divisão por zero
 
     for layer_i in range(total_layers - 1):
         w_matrix = nn.weights[layer_i]
@@ -140,11 +141,11 @@ def plot_network(nn,
                     continue
 
                 w_val = w_matrix[s_idx, d_idx]
-                norm_w = (w_val - w_min) / (w_max - w_min)
+                norm_w = (w_val - w_min) / max(epsilon, w_max - w_min)
                 arrow_color = cmap_arrows(norm_w)
 
                 b_val = b_vector[0, d_idx]
-                norm_b = (b_val - b_min) / (b_max - b_min)
+                norm_b = (b_val - b_min) / max(epsilon, b_max - b_min)
                 arrow_alpha = 0.2 + 0.8 * norm_b
 
                 arrow = ax.arrow(
