@@ -9,7 +9,8 @@ def plot_network(nn,
                  height=600,
                  max_show_input=8,
                  max_show_hidden=8,
-                 max_show_output=None):
+                 max_show_output=None,
+                 title=""):
     """
     Desenha a rede neural 'nn', exibindo até um certo número de neurônios
     em cada camada (com truncamento) e colorindo cada neurônio em escala de cinza
@@ -54,7 +55,7 @@ def plot_network(nn,
         A = nn.activation_func(Z)
         activations_per_layer.append(A)
 
-    layer_sizes = [nn.inputLayer] + nn.hiddenLayers + [nn.outputLayer]
+    layer_sizes = [nn.input_layer] + nn.hidden_layers + [nn.output_layer]
     total_layers = len(layer_sizes)
 
     # ========== 2) Definir quantos neurônios mostrar em cada camada ==========
@@ -106,7 +107,7 @@ def plot_network(nn,
     if A_min == A_max:
         A_min, A_max = A_min - 1e-9, A_max + 1e-9
 
-    ax.set_title("Visualização da Rede Neural (Truncada + grande espaçamento)")
+    ax.set_title("NeuralNetwork: " + title + "\n" + "weigth: cor | bias: espessura")
 
     neuron_positions = []
 

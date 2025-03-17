@@ -5,10 +5,11 @@ def main():
     input_size = 2
 
     nn = NeuralNetwork(
-        inputLayer=input_size,
-        hiddenLayers=[4,4],
-        outputLayer=2,
-        activation="sigmoid"
+        input_layer=input_size,
+        hidden_layers=[4, 4],
+        output_layer=2,
+        activation="sigmoid",
+        learning_rate=0.01,
     )
 
     X = np.random.rand(1, input_size)

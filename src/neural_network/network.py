@@ -17,33 +17,33 @@ ACTIVATIONS = {
 
 class NeuralNetwork:
     def __init__(self,
-                 inputLayer,
-                 hiddenLayers,
-                 outputLayer,
+                 input_layer,
+                 hidden_layers,
+                 output_layer,
                  activation="sigmoid",
-                 learningRate=0.1):
+                 learning_rate=0.1):
         """
         Construtor da classe NeuralNetwork.
 
         Parâmetros:
-        - inputLayer: Número de neurônios na camada de entrada.
-        - hiddenLayers: Lista contendo o número de neurônios em cada camada oculta. Ex: [6, 6].
-        - outputLayer: Número de neurônios na camada de saída.
+        - input_layer: Número de neurônios na camada de entrada.
+        - hidden_layers: Lista contendo o número de neurônios em cada camada oculta. Ex: [6, 6].
+        - output_layer: Número de neurônios na camada de saída.
         - activation: Tipo de função de ativação ("sigmoid" ou "relu").
-        - learningRate: Taxa de aprendizado (padrão=0.1).
+        - learning_rate: Taxa de aprendizado (padrão=0.1).
         """
 
         print("=== Inicializando Rede Neural ===")
-        print(f"- Camada de entrada: {inputLayer} neurônios")
-        print(f"- Camadas ocultas: {hiddenLayers}")
-        print(f"- Camada de saída: {outputLayer} neurônios")
-        print(f"- Função de ativação escolhida: {activation}")
-        print(f"- Taxa de aprendizado: {learningRate}\n")
+        print(f"- Camada de entrada: {input_layer} neurônios")
+        print(f"- Camadas ocultas: {hidden_layers}")
+        print(f"- Camada de saída: {output_layer} neurônios")
+        print(f"- Função de ativação: {activation}")
+        print(f"- Taxa de aprendizado: {learning_rate}\n")
 
-        self.inputLayer = inputLayer
-        self.hiddenLayers = hiddenLayers
-        self.outputLayer = outputLayer
-        self.learningRate = learningRate
+        self.input_layer = input_layer
+        self.hidden_layers = hidden_layers
+        self.output_layer = output_layer
+        self.learning_rate = learning_rate
 
         # Verifica se a função de ativação requisitada está no dicionário.
         if activation not in ACTIVATIONS:
@@ -56,7 +56,7 @@ class NeuralNetwork:
         self.biases = []
 
         # Montamos uma lista com todas as camadas: entrada, ocultas e saída.
-        layer_sizes = [self.inputLayer] + self.hiddenLayers + [self.outputLayer]
+        layer_sizes = [self.input_layer] + self.hidden_layers + [self.output_layer]
 
         # Inicialização aleatória dos pesos e biases.
         for i in range(len(layer_sizes) - 1):
@@ -75,16 +75,14 @@ class NeuralNetwork:
 
         print("=== Fim da inicialização ===\n")
 
-    def predict(self, A):
+    def predict(self, a):
         """
         Executa o forward pass pela rede e retorna a saída final.
         """
         print(">>> Iniciando forward pass...")
         for i, (w, b) in enumerate(zip(self.weights, self.biases), start=1):
-            Z = np.dot(A, w) + b  # Multiplicação matricial + bias
-            A = self.activation_func(Z)  # Aplica a função de ativação selecionada
-            print(f"   - Camada {i}: Z shape {Z.shape}, A shape {A.shape}")
+            z = np.dot(a, w) + b  # Multiplicação matricial + bias
+            a = self.activation_func(z)  # Aplica a função de ativação selecionada
+            print(f"   - Camada {i}: Z shape {z.shape}, A shape {a.shape}")
         print(">>> Forward pass finalizado.\n")
-        return A
-
-
+        return a
