@@ -4,15 +4,40 @@ import numpy as np
 def main():
     input_size = 2
 
+    # Pesos e bias personalizados com os tamanhos corretos
+    # 🔹 Definição manual de pesos e bias (listas normais)
+    custom_weights = [
+        np.array([
+            [0.5, -0.2, 0.3],  # Conexões da camada de entrada → oculta (3 neurônios)
+            [0.1,  0.4, -0.5]
+        ]),
+
+        np.array([
+            [0.7, 0.3],  # Conexões da camada oculta → saída (1 neurônio)
+            [-0.3, 0.5],
+            [0.2, 0.01]
+        ])
+    ]
+
+    custom_biases = [
+        np.array([
+            [0.1, -0.1, 0.05]
+        ]),  # Bias para camada oculta (3 neurônios)
+        np.array([
+            [0.2, 0.5],
+        ])               # Bias para camada de saída (1 neurônio)
+    ]
+
     nn = NeuralNetwork(
-        input_layer=input_size,
-        hidden_layers=[4, 4],
+        input_layer=2,
+        hidden_layers=[3],
         output_layer=2,
         activation="sigmoid",
-        learning_rate=0.01,
+        weights=custom_weights,
+        biases=custom_biases
     )
 
-    X = np.random.rand(1, input_size)
+    X = np.array([[1,0]])
 
     print("INPUT: ", X )
 
