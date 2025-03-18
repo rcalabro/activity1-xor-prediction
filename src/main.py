@@ -3,12 +3,12 @@ import numpy as np
 
 def main():
     input_size = 2
-    output_layer = [0,1]
+    output_classes = [0, 1]
 
     nn = NeuralNetwork(
         input_layer=input_size,
         hidden_layers=[3],
-        output_layer=2,
+        output_layer=len(output_classes),
         activation="sigmoid",
     )
 
