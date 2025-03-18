@@ -8,7 +8,7 @@ def main():
     nn = NeuralNetwork(
         input_layer=input_size,
         hidden_layers=[3],
-        output_layer=1,
+        output_layer=2,
         activation="sigmoid",
     )
 
@@ -22,10 +22,10 @@ def main():
     ])
 
     y = np.array([
-        [0],
-        [1],
-        [1],
-        [0]
+        [1 ,0],
+        [0, 1],
+        [0, 1],
+        [1, 0]
     ])
 
     # 🔹 Treinar a rede (somente aleatório para testes)
