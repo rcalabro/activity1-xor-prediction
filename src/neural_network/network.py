@@ -112,10 +112,18 @@ class NeuralNetwork:
         """
         Executa o forward pass pela rede e retorna a saída final.
         """
-        print(">>> Iniciando forward pass...")
+        # print(">>> Iniciando forward pass...")
+        # print("weights: ", self.weights)
+        # print("biases: ", self.biases)
         for i, (w, b) in enumerate(zip(self.weights, self.biases), start=1):
             z = np.dot(a, w) + b  # Multiplicação matricial + bias
             a = self.activation_func(z)  # Aplica a função de ativação selecionada
-            print(f"   - Camada {i}: Z shape {z.shape}, A shape {a.shape}")
-        print(">>> Forward pass finalizado.\n")
+            print(f"   - Camada {i}: Z {z}, A {a}")
+        # print(">>> Forward pass finalizado.\n")
         return a
+
+# agora em um arquivo separado, preciso criar o algoritmo de treinamento
+# esse funcao deve receber a rede nn criada um dataset e fazer o treinamento otimizando uma funcao de custo
+#
+# mas nao precisamos implementar um gradiant decent
+# pode ser algo randomico para testes
