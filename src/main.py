@@ -3,41 +3,16 @@ import numpy as np
 
 def main():
     input_size = 2
-
-    # Pesos e bias personalizados com os tamanhos corretos
-    # 🔹 Definição manual de pesos e bias (listas normais)
-    custom_weights = [
-        np.array([
-            [0.5, -0.2, 0.3],  # Conexões da camada de entrada → oculta (3 neurônios)
-            [0.1,  0.4, -0.5]
-        ]),
-
-        np.array([
-            [0.7, 0.3],  # Conexões da camada oculta → saída (1 neurônio)
-            [-0.3, 0.5],
-            [0.2, 0.01]
-        ])
-    ]
-
-    custom_biases = [
-        np.array([
-            [0.1, -0.1, 0.05]
-        ]),  # Bias para camada oculta (3 neurônios)
-        np.array([
-            [0.2, 0.5],
-        ])               # Bias para camada de saída (1 neurônio)
-    ]
+    output_layer = [0,1]
 
     nn = NeuralNetwork(
-        input_layer=2,
+        input_layer=input_size,
         hidden_layers=[3],
-        output_layer=2,
+        output_layer=len(output_layer),
         activation="sigmoid",
-        weights=custom_weights,
-        biases=custom_biases
     )
 
-    X = np.array([[1,0]])
+    X = np.random.rand(1, input_size)
 
     print("INPUT: ", X )
 
@@ -46,7 +21,7 @@ def main():
     print("Saída da rede (forward):")
     print(output)
 
-    # Exemplo: mostrar até 10 neurônios na entrada, 8 nas ocultas e todos na saída
+
     plot_network(
         nn,
         X,
