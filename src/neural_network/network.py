@@ -101,7 +101,6 @@ class NeuralNetwork:
 
             print(f"--- Camada {i+1} ---")
             print(f"   Número de neurônios: {layer_sizes[i]} -> {layer_sizes[i+1]}")
-            print(f"   Pesos shape: {w.shape}, Bias shape: {b.shape}")
             print(f"   Pesos (primeiros 5 valores): {w.flatten()[:5]}")
             print(f"   Bias (primeiros 5 valores): {b.flatten()[:5]}")
             print()
@@ -118,7 +117,7 @@ class NeuralNetwork:
         for i, (w, b) in enumerate(zip(self.weights, self.biases), start=1):
             z = np.dot(a, w) + b  # Multiplicação matricial + bias
             a = self.activation_func(z)  # Aplica a função de ativação selecionada
-            print(f"   - Camada {i}: Z {z}, A {a}")
+            # print(f"   - Camada {i}: Z {z}, A {a}")
         # print(">>> Forward pass finalizado.\n")
         return a
 
