@@ -1,3 +1,4 @@
+import time
 import numpy as np
 from .activation_functions import ACTIVATIONS, ACTIVATION_DERIVATIVES
 
@@ -108,33 +109,31 @@ class NeuralNetwork:
             self.biases.append(b)
 
             if verbose:
-                print(f"--- Camada {i+1} ---")
-                print(f"   Número de neurônios: {layer_sizes[i]} -> {layer_sizes[i+1]}")
-                print(f"   Pesos (primeiros 5 valores): {w.flatten()[:5]}")
-                print(f"   Bias (primeiros 5 valores): {b.flatten()[:5]}")
-                print()
+                print(f"--- Camada {i+1} --> neurons: {layer_sizes[i]} -> {layer_sizes[i+1]}")
 
         if verbose:
-            print(">>> Rede Neural Inicializada\n")
+            print("\n>>> Rede Neural Inicializada\n")
 
     def predict(self, a):
         """
         Executa o forward pass pela rede e retorna a saída final.
         """
-        if self.verbose:
-            print(">>> Iniciando forward pass...")
-            # print("weights: ", self.weights)
-            # print("biases: ", self.biases)
-        a = np.array(a)
+
+        start = time.perf_counter()
+        X = np.array(a)
         for i, (w, b) in enumerate(zip(self.weights, self.biases), start=1):
-            z = np.dot(a, w) + b  # Multiplicação matricial + bias
-            a = self.activation_func(z)  # Aplica a função de ativação selecionada
+            z = np.dot(X, w) + b  # Multiplicação matricial + bias
+            X = self.activation_func(z)  # Aplica a função de ativação selecionada
 
-            if self.verbose:
-                print(f"   - Camada {i}: Z {z}, A {a}")
+        end = time.perf_counter()
+
 
         if self.verbose:
-            print(">>> Forward pass finalizado.\n")
+            print(f"🔹 Forward pass {a} - ⏱️: {end - start:.6f} segundos")
+            print(f"    --> prediction: - {X.flatten()}")
         if self.output_classification is not None:
-            return self.output_classification(a)
-        return a
+            classified = self.output_classification(X)
+            if self.verbose:
+                print(f"    --> classified: - {classified}")
+            return self.output_classification(X)
+        return X

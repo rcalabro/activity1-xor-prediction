@@ -45,11 +45,12 @@ def main():
     X_train = X_test    =    [[0, 0],[0, 1],[1, 0],[1, 1]]
     y_train = y_test    =    [   [0],   [1],   [1],   [0]]
 
-    xor_nn = create_xor_nn(verbose=False)
+    xor_nn = create_xor_nn(verbose=True)
     train_xor(xor_nn, X_train, y_train, epochs=1000, target_error=0.25, learning_rate=1, verbose=True)
 
-    print("🔹 Testando Predições")
+    print("🔹 Testando Predições\n")
     results = xor_nn.predict(X_test)
+    print("\n   Summary")
     for case, pred, expected in zip(X_test, results, y_test):
         if plot:
             plot_network(xor_nn, case, show=False, show_labels=True, width=600, height=400, title=f"XOR: {case} -> {pred} expected: {expected}")

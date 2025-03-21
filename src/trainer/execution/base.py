@@ -1,3 +1,4 @@
+import time
 from abc import ABC, abstractmethod
 
 class ExecutionStrategy(ABC):
@@ -23,14 +24,16 @@ class ExecutionStrategy(ABC):
         else:
             print(f"🔹 Training: epochs={options.get('epochs')} | strategy={training_strategy.name}")
 
+        start = time.perf_counter()
         history, epoch, success = self._execute(nn, X, y, training_strategy, **options)
+        end = time.perf_counter()
 
         if success:
             print(f"\n✅ Erro alvo atingido na época {epoch+1}: {history[-1]:.6f}")
         else:
             print(f"\n❌ Target NOT met -> epoch: {epoch}: {history[-1]:.6f}")
 
-        print(">>> Treinamento Finalizado\n")
+        print(f">>> Treinamento Finalizado - ⏱️: {end - start:.4f} segundos\n")
         return history, epoch
 
     @abstractmethod
