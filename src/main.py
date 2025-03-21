@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 from trainer import Trainer
 from neural_network import NeuralNetwork, plot_network
 
-def xor_classification(pred):
-    def toClass(value):
-        return (value > 0.5).astype(int)
-
-    return np.array([toClass(x[0]) for x in pred])
-
 def create_xor_nn(verbose=False):
+    def xor_classification(pred):
+        def toClass(value):
+            return (value > 0.5).astype(int)
+
+        return np.array([toClass(x[0]) for x in pred])
+
     return NeuralNetwork(
         input_layer=2, # dois neuronios na camada de entrada
         hidden_layers=[2], # menor rede testada com sucesso
@@ -23,11 +23,7 @@ def create_xor_nn(verbose=False):
     )
 
 
-def train_xor(nn, epochs, target_error, learning_rate, verbose=False):
-    # Dataset -> Tabela verdade XOR
-    X = [[0, 0],[0, 1],[1, 0],[1, 1]]
-    y = [[0],[1],[1],[0]]
-
+def train_xor(nn, X, y, epochs, target_error, learning_rate, verbose=False):
     trainer = Trainer(
         exec_strategy="simple",            # ou "simple", "auto-restart"
         train_strategy="standard",         # outras podem ser plugadas depois
@@ -44,31 +40,17 @@ def train_xor(nn, epochs, target_error, learning_rate, verbose=False):
 
 def main():
     plot = False
-    epochs = 1000
+
+    # para fins do exercicio o dataset de treino e teste serão os mesmo ja que os casos de XOR são 4 entradas diferentes somente
+    X_train = X_test    =    [[0, 0],[0, 1],[1, 0],[1, 1]]
+    y_train = y_test    =    [   [0],   [1],   [1],   [0]]
 
     xor_nn = create_xor_nn(verbose=False)
-    train_xor(xor_nn, epochs, target_error=0.25, learning_rate=1, verbose=True)
-
-    # pode ser o dataset de treino repetido aqui pelo caso de uso XOR ser determinado e pequeno
-    # apenas simulando como se fossem outros casos para teste
-    cases = [
-        [0, 0],
-        [0, 1],
-        [1, 0],
-        [1, 1]
-    ]
-
-    expected = [
-        0,
-        1,
-        1,
-        0
-    ]
-
+    train_xor(xor_nn, X_train, y_train, epochs=1000, target_error=0.25, learning_rate=1, verbose=True)
 
     print("🔹 Testando Predições")
-    results = xor_nn.predict(cases)
-    for case, pred, expected in zip(cases, results, expected):
+    results = xor_nn.predict(X_test)
+    for case, pred, expected in zip(X_test, results, y_test):
         if plot:
             plot_network(xor_nn, case, show=False, show_labels=True, width=600, height=400, title=f"XOR: {case} -> {pred} expected: {expected}")
         print(f"XOR: {case} -> {pred} {'✅' if pred == expected else '❌'} expected: {expected}")
