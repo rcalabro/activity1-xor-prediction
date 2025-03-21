@@ -26,7 +26,8 @@ def plot_network(nn,
                  max_show_hidden=8,
                  max_show_output=None,
                  show_tooltip=True,
-                 title="Neural Network"):
+                 title="Neural Network",
+                 show=True):
     """
     Desenha a rede neural 'nn', exibindo até um certo número de neurônios
     em cada camada (com truncamento). A opacidade das conexões representa o bias,
@@ -179,4 +180,5 @@ def plot_network(nn,
     sm = cm.ScalarMappable(norm=mcolors.Normalize(vmin=w_min, vmax=w_max), cmap=cmap_arrows)
     fig.colorbar(sm, ax=ax, label="Peso (vermelho=menor, verde=maior)")
 
-    plt.show()
+    if show:
+        plt.show()
