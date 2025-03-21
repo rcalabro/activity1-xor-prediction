@@ -10,7 +10,7 @@ a múltiplas funções de custo (loss functions).
 Autor: Renato Calabro
 """
 
-def train_network(nn, X, y, epochs=1000, learning_rate=0.001, target_error=0.05, loss_function="mse"):
+def train_network(nn, X, y, epochs=1000, learning_rate=0.001, target_error=0.05, loss_function="mse", verbose=False):
     """
     Treina uma rede neural `nn` utilizando Backpropagation com Gradiente Descendente.
 
@@ -41,6 +41,13 @@ def train_network(nn, X, y, epochs=1000, learning_rate=0.001, target_error=0.05,
         raise ValueError(f"Função de custo '{loss_function}' não suportada.")
 
     history = []
+    target_met = False
+
+    if verbose:
+        print("=== Inicializando Treinamento ===")
+        print(f"- Epochs: {epochs}")
+        print(f"- Error target: {target_error}")
+        print(f"- Learning Rate: {learning_rate}")
 
     for epoch in range(epochs):
         # ========== 1. Forward pass ==========
@@ -60,7 +67,8 @@ def train_network(nn, X, y, epochs=1000, learning_rate=0.001, target_error=0.05,
         history.append(loss)
 
         if loss <= target_error:
-            print(f"\n✅ Erro alvo atingido na época {epoch+1}: {loss:.6f}")
+            target_met = True
+            print(f"\n✅ Target met -> epoch: {epoch+1}: {loss:.6f}")
             break
 
         # ========== 3. Backpropagation ==========
@@ -82,6 +90,11 @@ def train_network(nn, X, y, epochs=1000, learning_rate=0.001, target_error=0.05,
 
         # ========== 5. Log de progresso ==========
         if epoch % max(1, (epochs // 10)) == 0 or epoch == epochs - 1:
-            print(f"Época {epoch+1}/{epochs} - Erro: {loss:.6f}")
+            print(f"Epoch: {epoch+1}/{epochs} - Error: {loss:.6f}")
 
+
+    if not target_met:
+        print(f"\n❌ Target NOT met -> epoch: {epochs}: {history[-1]:.6f}")
+
+    print("=== Finalização do Treinamento ===")
     return history, epoch + 1
