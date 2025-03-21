@@ -57,6 +57,8 @@ def main():
     xor_nn = create_xor_nn(verbose=verbose)
     train_xor(xor_nn, epochs, target_error=0.25, learning_rate=1, verbose=verbose)
 
+    # pode ser o dataset de treino repetido aqui pelo caso de uso XOR ser determinado e pequeno
+    # apenas simulando como se fossem outros casos para teste
     cases = [
         [0, 0],
         [0, 1],
