@@ -29,9 +29,9 @@ class ExecutionStrategy(ABC):
         end = time.perf_counter()
 
         if success:
-            print(f"\n✅ Erro alvo atingido na época {epoch+1}: {history[-1]:.6f}")
+            print(f"\n✅ Erro alvo atingido na época {epoch+1} - error: {history[-1]:.6f}")
         else:
-            print(f"\n❌ Target NOT met -> epoch: {epoch}: {history[-1]:.6f}")
+            print(f"\n❌ Target NOT met -> epoch: {epoch} - error: {history[-1]:.6f}")
 
         print(f">>> Treinamento Finalizado - ⏱️: {end - start:.4f} segundos\n")
         return history, epoch
