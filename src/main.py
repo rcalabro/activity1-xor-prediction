@@ -7,7 +7,7 @@ def main():
 
     nn = NeuralNetwork(
         input_layer=input_size,
-        hidden_layers=[3],
+        hidden_layers=[2],
         output_layer=len(output_classes),
         activation="sigmoid",
     )
@@ -29,7 +29,7 @@ def main():
     ])
 
     # 🔹 Treinar a rede (somente aleatório para testes)
-    history = train_network(nn, X, y, epochs=100, learning_rate=0.1, target_error=0.01)
+    history = train_network(nn, X, y, epochs=100000, learning_rate=0.1, target_error=0.01, loss_function="binary_crossentropy")
 
     # 🔹 Testando a rede após o treinamento
     print("\n🔹 Teste da rede neural após treinamento:")

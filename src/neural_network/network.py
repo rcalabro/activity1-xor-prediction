@@ -46,8 +46,8 @@ class NeuralNetwork:
         print(f"- Camada de saída: {output_layer} neurônios")
         print(f"- Função de ativação: {activation}")
         print(f"- Taxa de aprendizado: {learning_rate}")
-        print(f"- Pesos pré-definidos: {'Sim' if weights else 'Não'}")
-        print(f"- Bias pré-definidos: {'Sim' if biases else 'Não'}\n")
+        print(f"- Pesos iniciais: {'Sim' if weights else 'RANDOM'}")
+        print(f"- Bias iniciais: {'Sim' if biases else 'RANDOM'}\n")
 
         self.input_layer = input_layer
         self.hidden_layers = hidden_layers
