@@ -95,44 +95,6 @@ def softmax_derivative(x):
     s = softmax(x)
     return np.diagflat(s) - np.outer(s, s)
 
-def swish(x):
-    """
-    Overview: Ativação não linear onde f(x) = x * sigmoid(x), permitindo valores negativos atenuados.
-    Casos bons para uso: Redes profundas e modelos avançados como EfficientNet.
-    Quando evitar: Pode ser computacionalmente mais caro do que ReLU.
-    """
-    return x * sigmoid(x)
-
-def swish_derivative(x):
-    """Derivada da função Swish."""
-    return sigmoid(x) + x * sigmoid_derivative(x)
-
-def elu(x, alpha=1.0):
-    """
-    Overview: Exponential Linear Unit (ELU) resolve o problema de neurônios mortos da ReLU.
-    Casos bons para uso: Redes profundas quando há muitos valores negativos.
-    Quando evitar: É mais caro computacionalmente do que ReLU ou Leaky ReLU.
-    """
-    return np.where(x > 0, x, alpha * (np.exp(x) - 1))
-
-def elu_derivative(x, alpha=1.0):
-    """Derivada da função ELU."""
-    return np.where(x > 0, 1, elu(x, alpha) + alpha)
-
-def gelu(x):
-    """
-    Overview: Gaussian Error Linear Unit (GELU), ativação suave baseada na distribuição Gaussiana.
-    Casos bons para uso: Modelos de NLP, como BERT, devido à suavidade da ativação.
-    Quando evitar: Em redes pequenas, onde ReLU pode ser mais eficiente.
-    """
-    return 0.5 * x * (1 + np.tanh(np.sqrt(2 / np.pi) * (x + 0.044715 * x**3)))
-
-def gelu_derivative(x):
-    """Derivada da função GELU."""
-    return 0.5 * (1 + np.tanh(np.sqrt(2 / np.pi) * (x + 0.044715 * x**3))) + \
-        0.5 * x * (1 - np.tanh(np.sqrt(2 / np.pi) * (x + 0.044715 * x**3))**2) * \
-        (np.sqrt(2 / np.pi) * (1 + 3 * 0.044715 * x**2))
-
 # 🔹 Dicionário para importar funções de forma dinâmica
 ACTIVATIONS = {
     "step": step_function,
@@ -141,9 +103,6 @@ ACTIVATIONS = {
     "leaky_relu": leaky_relu,
     "tanh": tanh,
     "softmax": softmax,
-    "swish": swish,
-    "elu": elu,
-    "gelu": gelu
 }
 
 # 🔹 Dicionário das derivadas das
@@ -155,7 +114,4 @@ ACTIVATION_DERIVATIVES = {
     "leaky_relu": leaky_relu_derivative,
     "tanh": tanh_derivative,
     "softmax": softmax_derivative,
-    "swish": swish_derivative,
-    "elu": elu_derivative,
-    "gelu": gelu_derivative
 }
