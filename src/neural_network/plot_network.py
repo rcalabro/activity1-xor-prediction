@@ -26,6 +26,7 @@ def plot_network(nn,
                  max_show_hidden=8,
                  max_show_output=None,
                  show_tooltip=True,
+                 show_labels=False,
                  title="Neural Network",
                  show=True):
     """
@@ -42,6 +43,11 @@ def plot_network(nn,
       - max_show_output (int ou None): máx. neurônios na camada de saída (None => todos).
       - title (str): título principal do gráfico (default: "Neural Network").
     """
+
+    x_input  = np.array([x_input])
+
+    if show_labels:
+        show_tooltip = False
 
     if x_input.shape[0] > 1:
         x_input = x_input[:1]
@@ -161,6 +167,25 @@ def plot_network(nn,
                 if show_tooltip:
                     # Salva a seta e os valores para o tooltip
                     arrows.append((arrow, w_val, b_val))
+
+                if show_labels:
+                    # Calcula ponto médio da seta
+                    x_label = x1 + (x2 - x1) * 0.33
+                    y_label = y1 + (y2 - y1) * 0.33
+                    label = f"w={w_val:.2f}\nb={b_val:.2f}"
+
+                    adjust = 0.33
+
+                    ax.text(
+                        x_label, y_label,
+                        label,
+                        fontsize=8,
+                        ha='center',
+                        va='center',
+                        color='black',
+                        bbox=dict(facecolor='white', edgecolor='none', alpha=0.7),
+                        zorder=4
+    )
 
     # ========== Adiciona tooltip interativo ==========
     cursor = mplcursors.cursor([a[0] for a in arrows], hover=True)
