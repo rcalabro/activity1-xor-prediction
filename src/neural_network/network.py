@@ -55,6 +55,7 @@ class NeuralNetwork:
         self.hidden_layers = hidden_layers
         self.output_layer = output_layer
         self.output_classification = output_classification
+        self.verbose = verbose
 
         # Verifica se a função de ativação requisitada está no dicionário.
         if activation not in ACTIVATIONS:
@@ -115,15 +116,20 @@ class NeuralNetwork:
         """
         Executa o forward pass pela rede e retorna a saída final.
         """
-        # print(">>> Iniciando forward pass...")
-        # print("weights: ", self.weights)
-        # print("biases: ", self.biases)
+        if self.verbose:
+            print(">>> Iniciando forward pass...")
+            print("weights: ", self.weights)
+            print("biases: ", self.biases)
         a = np.array(a)
         for i, (w, b) in enumerate(zip(self.weights, self.biases), start=1):
             z = np.dot(a, w) + b  # Multiplicação matricial + bias
             a = self.activation_func(z)  # Aplica a função de ativação selecionada
-            # print(f"   - Camada {i}: Z {z}, A {a}")
-        # print(">>> Forward pass finalizado.\n")
+
+            if self.verbose:
+                print(f"   - Camada {i}: Z {z}, A {a}")
+
+        if self.verbose:
+            print(">>> Forward pass finalizado.\n")
         if self.output_classification is not None:
             return self.output_classification(a)
         return a

@@ -50,8 +50,8 @@ def train_xor(nn, epochs=100000, target_error=0.24, learning_rate=0.5, verbose=F
 
 
 def main():
-    plot = True
-    verbose = True
+    plot = False
+    verbose = False
     epochs = 1000
 
     xor_nn = create_xor_nn(verbose=verbose)
