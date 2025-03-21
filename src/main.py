@@ -3,7 +3,8 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
-from neural_network import NeuralNetwork, plot_network, train_network
+from trainer import Trainer
+from neural_network import NeuralNetwork, plot_network
 
 def xor_classification(pred):
     def toClass(value):
@@ -22,40 +23,31 @@ def create_xor_nn(verbose=False):
     )
 
 
-def train_xor(nn, epochs=100000, target_error=0.24, learning_rate=0.5, verbose=False):
+def train_xor(nn, epochs, target_error, learning_rate, verbose=False):
     # Dataset -> Tabela verdade XOR
-    X = [
-        [0, 0],
-        [0, 1],
-        [1, 0],
-        [1, 1]
-    ]
+    X = [[0, 0],[0, 1],[1, 0],[1, 1]]
+    y = [[0],[1],[1],[0]]
 
-    y = [
-        [0],
-        [1],
-        [1],
-        [0]
-    ]
+    trainer = Trainer(
+        exec_strategy="simple",            # ou "simple", "auto-restart"
+        train_strategy="standard",         # outras podem ser plugadas depois
+        learning_rate=learning_rate,
+        loss_function="binary_crossentropy",
+        target_error=target_error,
+        epochs=epochs,
+        verbose=True
+    )
 
-    history = train_network(nn,
-                            np.array(X),
-                            np.array(y),
-                            epochs=epochs,
-                            learning_rate=learning_rate,
-                            target_error=target_error,
-                            loss_function="binary_crossentropy",
-                            verbose=verbose)
-    return history
+    history, epochs = trainer.train(nn, np.array(X), np.array(y))
+    return history, epochs
 
 
 def main():
     plot = False
-    verbose = False
     epochs = 1000
 
-    xor_nn = create_xor_nn(verbose=verbose)
-    train_xor(xor_nn, epochs, target_error=0.25, learning_rate=1, verbose=verbose)
+    xor_nn = create_xor_nn(verbose=False)
+    train_xor(xor_nn, epochs, target_error=0.25, learning_rate=1, verbose=True)
 
     # pode ser o dataset de treino repetido aqui pelo caso de uso XOR ser determinado e pequeno
     # apenas simulando como se fossem outros casos para teste
@@ -73,6 +65,8 @@ def main():
         0
     ]
 
+
+    print("🔹 Testando Predições")
     results = xor_nn.predict(cases)
     for case, pred, expected in zip(cases, results, expected):
         if plot:

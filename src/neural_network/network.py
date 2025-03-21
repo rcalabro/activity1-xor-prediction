@@ -1,5 +1,5 @@
 import numpy as np
-from .activation_functions import ACTIVATIONS
+from .activation_functions import ACTIVATIONS, ACTIVATION_DERIVATIVES
 
 """
 Implementação baseada no livro "Make Your Own Neural Network" de Tariq Rashid, 
@@ -41,15 +41,15 @@ class NeuralNetwork:
         """
 
         if verbose:
-            print("=== Inicializando Rede Neural ===")
-            print(f"- Camada de entrada: {input_layer} neurônios")
-            print(f"- Camadas ocultas: {hidden_layers}")
-            print(f"- Camada de saída: {output_layer} neurônios")
-            print(f"- Função de ativação: {activation}")
-            print(f"- Pesos iniciais: {'Sim' if weights else 'RANDOM'}")
-            print(f"- Bias iniciais: {'Sim' if biases else 'RANDOM'}\n")
+            print("🔹 Inicializando Rde Neural")
+            print(f"    Camada de entrada: {input_layer} neurônios")
+            print(f"    Camadas ocultas: {hidden_layers}")
+            print(f"    Camada de saída: {output_layer} neurônios")
+            print(f"    Função de ativação: {activation}")
+            print(f"    Pesos iniciais: {'Sim' if weights else 'RANDOM'}")
+            print(f"    Bias iniciais: {'Sim' if biases else 'RANDOM'}\n")
         else:
-            print(f"NeuralNetwork: [{input_layer}, {hidden_layers}, {output_layer}] | activation: {activation}")
+            print(f"🔹 NeuralNetwork: [{input_layer}, {hidden_layers}, {output_layer}] | activation: {activation}\n")
 
         self.input_layer = input_layer
         self.hidden_layers = hidden_layers
@@ -62,6 +62,11 @@ class NeuralNetwork:
             raise ValueError(f"Função de ativação '{activation}' não suportada. "
                              f"Escolha entre: {list(ACTIVATIONS.keys())}")
         self.activation_func = ACTIVATIONS[activation]
+        if activation not in ACTIVATION_DERIVATIVES:
+            raise ValueError(f"Função de ativação '{activation}' não suportada não ter derivada implementada")
+
+        # para treinamento
+        self.activation_derivative = ACTIVATION_DERIVATIVES[activation]
 
         # Lista de pesos e biases
         self.weights = []
@@ -110,7 +115,7 @@ class NeuralNetwork:
                 print()
 
         if verbose:
-            print("=== Fim da inicialização ===\n")
+            print(">>> Rede Neural Inicializada\n")
 
     def predict(self, a):
         """
@@ -118,8 +123,8 @@ class NeuralNetwork:
         """
         if self.verbose:
             print(">>> Iniciando forward pass...")
-            print("weights: ", self.weights)
-            print("biases: ", self.biases)
+            # print("weights: ", self.weights)
+            # print("biases: ", self.biases)
         a = np.array(a)
         for i, (w, b) in enumerate(zip(self.weights, self.biases), start=1):
             z = np.dot(a, w) + b  # Multiplicação matricial + bias
