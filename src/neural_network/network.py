@@ -24,9 +24,10 @@ class NeuralNetwork:
                  hidden_layers,
                  output_layer,
                  activation="sigmoid",
-                 learning_rate=0.1,
+                 output_classification=None,
                  weights=None,
-                 biases=None):
+                 biases=None,
+                 verbose=False):
         """
         Construtor da classe NeuralNetwork.
 
@@ -35,24 +36,25 @@ class NeuralNetwork:
         - hidden_layers: Lista contendo o número de neurônios em cada camada oculta. Ex: [6, 6].
         - output_layer: Número de neurônios na camada de saída.
         - activation: Tipo de função de ativação.
-        - learning_rate: Taxa de aprendizado (padrão=0.1).
         - weights: Lista opcional de matrizes numpy para os pesos (se None, inicializa aleatório).
         - biases: Lista opcional de vetores numpy para os biases (se None, inicializa aleatório).
         """
 
-        print("=== Inicializando Rede Neural ===")
-        print(f"- Camada de entrada: {input_layer} neurônios")
-        print(f"- Camadas ocultas: {hidden_layers}")
-        print(f"- Camada de saída: {output_layer} neurônios")
-        print(f"- Função de ativação: {activation}")
-        print(f"- Taxa de aprendizado: {learning_rate}")
-        print(f"- Pesos iniciais: {'Sim' if weights else 'RANDOM'}")
-        print(f"- Bias iniciais: {'Sim' if biases else 'RANDOM'}\n")
+        if verbose:
+            print("=== Inicializando Rede Neural ===")
+            print(f"- Camada de entrada: {input_layer} neurônios")
+            print(f"- Camadas ocultas: {hidden_layers}")
+            print(f"- Camada de saída: {output_layer} neurônios")
+            print(f"- Função de ativação: {activation}")
+            print(f"- Pesos iniciais: {'Sim' if weights else 'RANDOM'}")
+            print(f"- Bias iniciais: {'Sim' if biases else 'RANDOM'}\n")
+        else:
+            print(f"NeuralNetwork: [{input_layer}, {hidden_layers}, {output_layer}] | activation: {activation}")
 
         self.input_layer = input_layer
         self.hidden_layers = hidden_layers
         self.output_layer = output_layer
-        self.learning_rate = learning_rate
+        self.output_classification = output_classification
 
         # Verifica se a função de ativação requisitada está no dicionário.
         if activation not in ACTIVATIONS:
@@ -99,13 +101,15 @@ class NeuralNetwork:
             self.weights.append(w)
             self.biases.append(b)
 
-            print(f"--- Camada {i+1} ---")
-            print(f"   Número de neurônios: {layer_sizes[i]} -> {layer_sizes[i+1]}")
-            print(f"   Pesos (primeiros 5 valores): {w.flatten()[:5]}")
-            print(f"   Bias (primeiros 5 valores): {b.flatten()[:5]}")
-            print()
+            if verbose:
+                print(f"--- Camada {i+1} ---")
+                print(f"   Número de neurônios: {layer_sizes[i]} -> {layer_sizes[i+1]}")
+                print(f"   Pesos (primeiros 5 valores): {w.flatten()[:5]}")
+                print(f"   Bias (primeiros 5 valores): {b.flatten()[:5]}")
+                print()
 
-        print("=== Fim da inicialização ===\n")
+        if verbose:
+            print("=== Fim da inicialização ===\n")
 
     def predict(self, a):
         """
@@ -114,15 +118,12 @@ class NeuralNetwork:
         # print(">>> Iniciando forward pass...")
         # print("weights: ", self.weights)
         # print("biases: ", self.biases)
+        a = np.array(a)
         for i, (w, b) in enumerate(zip(self.weights, self.biases), start=1):
             z = np.dot(a, w) + b  # Multiplicação matricial + bias
             a = self.activation_func(z)  # Aplica a função de ativação selecionada
             # print(f"   - Camada {i}: Z {z}, A {a}")
         # print(">>> Forward pass finalizado.\n")
+        if self.output_classification is not None:
+            return self.output_classification(a)
         return a
-
-# agora em um arquivo separado, preciso criar o algoritmo de treinamento
-# esse funcao deve receber a rede nn criada um dataset e fazer o treinamento otimizando uma funcao de custo
-#
-# mas nao precisamos implementar um gradiant decent
-# pode ser algo randomico para testes
