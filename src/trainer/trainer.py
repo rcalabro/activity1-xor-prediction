@@ -1,6 +1,6 @@
-from .execution.simple import SimpleExecutionStrategy
+from .execution.basic_loop import BasicLoopExecution
 
-from .training.standard import StandardTrainingStrategy
+from .training.vanilla_backpropagation import VanillaBackpropagation
 # futuras: momentum, minibatch, etc
 
 class Trainer:
@@ -11,8 +11,8 @@ class Trainer:
 
     def _resolve_execution(self, name, **override_options):
         opts = {**self.options, **override_options}
-        if name == "simple":
-            return SimpleExecutionStrategy(**opts)
+        if name == "basic-loop":
+            return BasicLoopExecution(**opts)
         # elif name == "auto-restart":
         #     return RestartExecutionStrategy()
         # elif name == "early-stop":
@@ -22,8 +22,8 @@ class Trainer:
 
     def _resolve_training(self, name, **override_options):
         opts = {**self.options, **override_options}
-        if name == "standard":
-            return StandardTrainingStrategy(**opts)
+        if name == "vanilla-backpropagation":
+            return VanillaBackpropagation(**opts)
         else:
             raise ValueError(f"Estratégia de treinamento '{name}' não reconhecida.")
 

@@ -1,8 +1,9 @@
 from .base import ExecutionStrategy
 
-class SimpleExecutionStrategy(ExecutionStrategy):
+class BasicLoopExecution(ExecutionStrategy):
     def __init__(self, **options):
         super().__init__(**options)
+        self.name = 'basic-loop'
 
     def _execute(self, nn, X, y, training_strategy, **options):
         epochs = self.epochs

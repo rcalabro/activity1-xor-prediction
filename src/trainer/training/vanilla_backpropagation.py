@@ -10,10 +10,10 @@ os erros e atualizar os pesos/bias.
 Autor: Renato Calabro
 """
 
-class StandardTrainingStrategy(TrainingStrategy):
+class VanillaBackpropagation(TrainingStrategy):
     def __init__(self, **options):
         super().__init__(**options)
-        self.name = "standard"
+        self.name = "vanilla-backpropagation"
 
     def train_step(self, nn, X, y, **options):
         """
@@ -53,6 +53,7 @@ class StandardTrainingStrategy(TrainingStrategy):
             w_forward = nn.weights[i + 1]
             da_dz = nn.activation_derivative(inputs[i])
             deltas[i] = np.dot(delta_forward, w_forward.T) * da_dz
+
 
         # 🔹 Atualização dos pesos e bias
         for i in range(len(nn.weights)):

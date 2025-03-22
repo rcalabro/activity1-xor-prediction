@@ -25,8 +25,8 @@ def create_xor_nn(verbose=False):
 
 def train_xor(nn, X, y, epochs, target_error, learning_rate, verbose=False):
     trainer = Trainer(
-        exec_strategy="simple",            # ou "simple", "auto-restart"
-        train_strategy="standard",         # outras podem ser plugadas depois
+        exec_strategy="basic-loop",
+        train_strategy="vanilla-backpropagation",
         learning_rate=learning_rate,
         loss_function="binary_crossentropy",
         target_error=target_error,
@@ -54,7 +54,7 @@ def main():
     for case, pred, expected in zip(X_test, results, y_test):
         if plot:
             plot_network(xor_nn, case, show=False, show_labels=True, width=600, height=400, title=f"XOR: {case} -> {pred} expected: {expected}")
-        print(f"XOR: {case} -> {pred} {'✅' if pred == expected else '❌'} expected: {expected}")
+        print(f"XOR: {case} -> {pred} {'✅' if pred == expected else '❌'} expected: {expected[0]}")
 
     if plot:
         plt.show()
