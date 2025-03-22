@@ -33,7 +33,7 @@ class ExecutionStrategy(ABC):
         else:
             print(f"\n❌ Target NOT met -> epoch: {epoch} - error: {history[-1]:.6f}")
 
-        print(f">>> Treinamento Finalizado - ⏱️: {end - start:.4f} segundos\n")
+        print(f">>> Treinamento Finalizado - ⏱️: {end - start:.3f}s\n")
         return history, epoch
 
     @abstractmethod

@@ -129,7 +129,7 @@ class NeuralNetwork:
 
 
         if self.verbose:
-            print(f"🔹 Forward pass {a} - ⏱️: {end - start:.6f} segundos")
+            print(f"🔹 Forward pass {a} - ⏱️: {(end - start)*1000:.6f}ms")
             print(f"    --> prediction: - {X.flatten()}")
         if self.output_classification is not None:
             classified = self.output_classification(X)
