@@ -39,3 +39,6 @@ pip-delete-this-directory.txt
 *.env
 *.env.*
 *.envrc
+
+checkpoints/*.npz
+**/checkpoints/*.npz

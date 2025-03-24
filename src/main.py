@@ -23,7 +23,7 @@ def create_xor_nn(verbose=False):
     )
 
 
-def train_xor(nn, X, y, epochs, target_error, learning_rate, verbose=False):
+def train_xor(nn, X, y, epochs, target_error, learning_rate, save_checkpoint=None, verbose=False):
     trainer = Trainer(
         exec_strategy="basic-loop",
         train_strategy="vanilla-backpropagation",
@@ -31,10 +31,11 @@ def train_xor(nn, X, y, epochs, target_error, learning_rate, verbose=False):
         loss_function="binary_crossentropy",
         target_error=target_error,
         epochs=epochs,
-        verbose=True
+        save_checkpoint=save_checkpoint,
+        verbose=verbose
     )
 
-    history, epochs = trainer.train(nn, np.array(X), np.array(y))
+    history, epochs, success = trainer.train(nn, np.array(X), np.array(y))
     return history, epochs
 
 
@@ -46,7 +47,9 @@ def main():
     y_train = y_test    =    [   [0],   [1],   [1],   [0]]
 
     xor_nn = create_xor_nn(verbose=True)
-    train_xor(xor_nn, X_train, y_train, epochs=1000, target_error=0.25, learning_rate=1, verbose=True)
+    train_xor(xor_nn, X_train, y_train,
+              epochs=1000, target_error=0.25, learning_rate=1,
+              save_checkpoint='./checkpoints/xor_nn.npz', verbose=True)
 
     print("🔹 Testando Predições\n")
     results = xor_nn.predict(X_test)

@@ -34,7 +34,7 @@ class ExecutionStrategy(ABC):
             print(f"\n❌ Target NOT met -> epoch: {epoch} - error: {history[-1]:.6f}")
 
         print(f">>> Treinamento Finalizado - ⏱️: {end - start:.3f}s\n")
-        return history, epoch
+        return history, epoch, success
 
     @abstractmethod
     def _execute(self, nn, X, y, training_strategy, **options):
