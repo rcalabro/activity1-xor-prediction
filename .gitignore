@@ -42,5 +42,4 @@ pip-delete-this-directory.txt
 
 checkpoints/*.npz
 **/checkpoints/*.npz
-**/checkpoints/*.npz
 !**/checkpoints/*_sample.npz
