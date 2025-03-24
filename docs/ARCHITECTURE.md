@@ -23,6 +23,8 @@ graph TD
         H[activation_functions.py]
     end
      I[analysis/plot_network.py]
+     K[analysis/confusion_matrix.py]
+     L[analysis/metrics.py]
 
     subgraph trainer
         F[execution/basic_loop.py]
@@ -33,6 +35,8 @@ graph TD
     E --> H
     E --> I
     G --> J
+    A --> K
+    K --> L
 ```
 
 
@@ -61,7 +65,7 @@ O projeto é organizado de forma modular para separar responsabilidades:
 - 🧠 **NeuralNetwork**: Lida com estrutura da rede, ativação e forward pass
 - 🏋️ **Trainer**: Controla o processo de treinamento e execução
 - ⚙️ **Strategies**: Estratégias plugáveis de execução e de atualização de pesos
-- 📊 **Analysis**: Visualização gráfica da rede neural e métricas de avaliação
+- 📊 Analysis: Visualização gráfica da rede neural (plot_network) e métricas de avaliação (metrics), incluindo acurácia, precisão, recall e F1-score, com suporte a análise por classe e médias ponderadas.
 - 📁 **Docs**: Toda documentação da atividade e explicações técnicas
 - 💾 **Checkpoints**: Pesos salvos da rede para evitar reprocessamento
 - 🚀 **main.py**: Ponto de entrada da aplicação (treina ou testa a rede)

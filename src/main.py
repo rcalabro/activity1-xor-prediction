@@ -45,7 +45,7 @@ def train_xor(nn, X, y, epochs, target_error, learning_rate, save_checkpoint=Non
 
 
 def main():
-    plot = True
+    plot = False
     load_checkpoint = True
     checkpoint_path = "./checkpoints/xor_nn_sample.npz"
 
@@ -65,7 +65,7 @@ def main():
 
     for case, pred, expected in zip(X_test, results, y_test):
         if plot:
-            plot_network(xor_nn, case, show_labels=True, width=600, height=400, title=f"XOR: {case} -> {pred} expected: {expected}")
+            plot_network(xor_nn, case, show_labels=True, width=550, height=550, title=f"XOR: {case} -> {pred} expected: {expected}")
         print(f"XOR: {case} -> {pred} {'✅' if pred == expected else '❌'} expected: {expected}")
 
     print()

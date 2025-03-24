@@ -111,6 +111,58 @@ def xor_classification(pred):
 
 A função foi atribuída à rede via o parâmetro `output_classification`, o que permite que a rede **retorne diretamente o valor classificado** após o `predict`, sem necessidade de processamento externo.
 
+## 📊 Análise das Métricas
+
+Após o treinamento da rede e a classificação dos quatro casos possíveis da porta XOR, foi realizada uma avaliação quantitativa utilizando **matriz de confusão** e métricas clássicas de classificação.
+
+### → Matriz de Confusão
+
+```
+[[2 0]
+ [0 2]]
+```
+
+![Figura 1: Matriz de Confusão](./assets/plots/fig_5.png)
+
+### → Métricas
+
+```
+accuracy:            1.0
+precision   --> mean 1.0 | classes [1. 1.]
+recall      --> mean 1.0 | classes [1. 1.]
+f1_score    --> mean 1.0 | classes [1. 1.]
+```
+
+<p float="left">
+  <a href="assets/plots/fig_1.png" target="_blank"><img src="./assets/plots/fig_1.png" width="200" /></a>
+  <a href="assets/plots/fig_2.png" target="_blank"><img src="./assets/plots/fig_2.png" width="200" /></a>
+</p>
+<p float="left">
+  <a href="assets/plots/fig_3.png" target="_blank"><img src="./assets/plots/fig_3.png" width="200" /></a>
+  <a href="assets/plots/fig_4.png" target="_blank"><img src="./assets/plots/fig_4.png" width="200" /></a>
+</p>
+
+
+### ✅ Interpretação
+
+Esses valores indicam um desempenho perfeito em todos os critérios:
+
+- **Accuracy**: 100% de acertos entre as previsões e os rótulos reais
+- **Precision**: Nenhum falso positivo foi cometido — toda predição de classe `1` realmente era classe `1`
+- **Recall**: Todas as ocorrências reais da classe `1` foram corretamente detectadas
+- **F1-score**: Equilíbrio total entre precisão e recall
+
+### 🔍 Considerações sobre Overfitting
+
+Embora métricas perfeitas normalmente possam sugerir **overfitting**, neste caso isso **não representa um problema**, porque:
+
+- O domínio do problema é totalmente conhecido (apenas 4 combinações possíveis)
+- A rede foi testada exatamente sobre **todos os casos possíveis de entrada**
+- Não há “dados novos” para os quais a rede precise generalizar
+
+➡️ Portanto, a rede **não está apenas memorizando os dados**, mas sim **aprendendo corretamente a lógica da função XOR**.
+
+
 ## 🧰 Observações
 
 - Todo o projeto foi feito com **NumPy puro**, sem uso de frameworks de machine learning

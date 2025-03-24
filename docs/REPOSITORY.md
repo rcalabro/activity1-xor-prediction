@@ -27,6 +27,9 @@ Código-fonte da aplicação.
 
 - `neural_network/`: Implementação da rede neural e funções de ativação.
 - `analysis/`: Métricas e visualização gráfica da rede neural.
+    - `metrics.py`: Cálculo e análise de métricas de classificação como accuracy, precision, recall e F1-score, com suporte a médias macro e weighted.
+    - `confusion_matrix.py`: Geração da matriz de confusão a partir dos rótulos reais e previstos, compatível com classificação binária e multiclasse.
+    - `plot_network.py`: Visualização gráfica da estrutura da rede neural treinada.
 
 - `neural_network/trainer/`: Camada de treinamento, com suporte a múltiplas estratégias de execução e atualização.
 
