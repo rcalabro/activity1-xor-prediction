@@ -25,20 +25,6 @@ A organização das pastas e arquivos do projeto foi pensada para manter separa�
 Para mais detalhes, consulte o documento completo:  
 📄 [`REPOSITORY.md`](./docs/REPOSITORY.md)
 
-## 🚀 Como Executar
-
-Todos os passos para:
-
-- Criar a rede
-- Treiná-la (caso não haja pesos salvos)
-- Carregar pesos previamente treinados
-- Testar os resultados da porta XOR
-- (Opcional) Visualizar graficamente a rede
-
-estão descritos no arquivo:
-
-📘 [`INSTRUCTIONS.md`](./docs/INSTRUCTIONS.md)
-
 ## 🧱 Arquitetura Resumida
 
 O projeto é organizado de forma modular para separar responsabilidades:
@@ -52,6 +38,20 @@ O projeto é organizado de forma modular para separar responsabilidades:
 - 🚀 **main.py**: Ponto de entrada da aplicação (treina ou testa a rede)
 
 Para mais detalhes visuais, consulte o diagrama em [`ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
+
+## 🚀 Como Executar
+
+Todos os passos para:
+
+- Criar a rede
+- Treiná-la (caso não haja pesos salvos)
+- Carregar pesos previamente treinados
+- Testar os resultados da porta XOR
+- (Opcional) Visualizar graficamente a rede
+
+estão descritos no arquivo:
+
+📘 [`INSTRUCTIONS.md`](./docs/INSTRUCTIONS.md)
 
 ---
 

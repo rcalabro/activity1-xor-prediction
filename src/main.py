@@ -6,13 +6,14 @@ import matplotlib.pyplot as plt
 from trainer import Trainer
 from neural_network import NeuralNetwork
 from analysis.plot_network import plot_network
+from analysis.metrics import confusion_matrix
 
 def create_xor_nn(load_checkpoint=None, verbose=False):
     def xor_classification(pred):
         def toClass(value):
             return (value > 0.5).astype(int)
 
-        return np.array([toClass(x[0]) for x in pred])
+        return np.array([[toClass(x[0])] for x in pred])
 
     if load_checkpoint:
         return NeuralNetwork.load_checkpoint(load_checkpoint, xor_classification, verbose=verbose)
@@ -44,9 +45,9 @@ def train_xor(nn, X, y, epochs, target_error, learning_rate, save_checkpoint=Non
 
 
 def main():
-    plot = True
+    plot = False
     load_checkpoint = True
-    checkpoint_path = "./checkpoints/xor_nn.npz"
+    checkpoint_path = "./checkpoints/xor_nn_sample.npz"
 
     # para fins do exercicio o dataset de treino e teste serão os mesmo ja que os casos de XOR são 4 entradas diferentes somente
     X_train = X_test    =    [[0, 0],[0, 1],[1, 0],[1, 1]]
@@ -62,15 +63,20 @@ def main():
     print("🔹 Testando Predições\n")
     results = xor_nn.predict(X_test)
 
-    print("   Summary")
     for case, pred, expected in zip(X_test, results, y_test):
         if plot:
             plot_network(xor_nn, case, show=False, show_labels=True, width=600, height=400, title=f"XOR: {case} -> {pred} expected: {expected}")
-        print(f"XOR: {case} -> {pred} {'✅' if pred == expected else '❌'} expected: {expected[0]}")
+        print(f"XOR: {case} -> {pred} {'✅' if pred == expected else '❌'} expected: {expected}")
 
     if plot:
         plt.show()
 
+    print()
+    print("🔹 Análise dos resultados\n")
+    matrix, labels = confusion_matrix(y_test, results)
+
+    print("    -> Matriz de Confusão")
+    print(matrix)
 
 if __name__ == "__main__":
     def handle_exit(sig, frame):
