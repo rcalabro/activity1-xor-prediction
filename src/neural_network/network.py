@@ -42,7 +42,7 @@ class NeuralNetwork:
         """
 
         if verbose:
-            print("🔹 Inicializando Rde Neural")
+            print("🔹 Inicializando Rede Neural")
             print(f"    Camada de entrada: {input_layer} neurônios")
             print(f"    Camadas ocultas: {hidden_layers}")
             print(f"    Camada de saída: {output_layer} neurônios")
@@ -111,6 +111,11 @@ class NeuralNetwork:
             if verbose:
                 print(f"--- Camada {i+1} --> neurons: {layer_sizes[i]} -> {layer_sizes[i+1]}")
 
+        self.weights = [w.astype(np.float32) for w in self.weights]
+        self.biases = [b.astype(np.float32) for b in self.biases]
+
+        self._predict = self._predict_verbose if self.verbose else self._predict_fast
+
         if verbose:
             print("\n>>> Rede Neural Inicializada\n")
 
@@ -127,6 +132,7 @@ class NeuralNetwork:
         Retorna:
         - Instância de NeuralNetwork pronta para uso
         """
+        print(f"🔹 Loading checkpoint: {path}\n")
         data = np.load(path, allow_pickle=True)
 
         input_layer = int(data["input_layer"])
@@ -150,23 +156,41 @@ class NeuralNetwork:
     def predict(self, a):
         """
         Executa o forward pass pela rede e retorna a saída final.
+        Direciona para a versão com ou sem logs.
         """
+        X = np.ascontiguousarray(np.array(a))
+        return self._predict(a)
 
+
+    def _predict_fast(self, X):
+        """
+        Forward pass otimizado sem logs.
+        Usa operações vetorizadas com np.dot.
+        """
+        for w, b in zip(self.weights, self.biases):
+            z = np.dot(X, w) + b
+            X = self.activation_func(z)
+
+        return self.output_classification(X) if self.output_classification else X
+
+    def _predict_verbose(self, X):
+        """
+        Forward pass com logs e tempo de execução.
+        """
         start = time.perf_counter()
-        X = np.array(a)
-        for i, (w, b) in enumerate(zip(self.weights, self.biases), start=1):
-            z = np.dot(X, w) + b  # Multiplicação matricial + bias
-            X = self.activation_func(z)  # Aplica a função de ativação selecionada
+
+        for w, b in zip(self.weights, self.biases):
+            z = np.dot(X, w) + b
+            X = self.activation_func(z)
 
         end = time.perf_counter()
 
+        print(f"🔹 Forward pass - ⏱️: {(end - start)*1000:.6f}ms")
+        print(f"    --> prediction: {X.flatten()}")
 
-        if self.verbose:
-            print(f"🔹 Forward pass {a} - ⏱️: {(end - start)*1000:.6f}ms")
-            print(f"    --> prediction: - {X.flatten()}")
-        if self.output_classification is not None:
+        if self.output_classification:
             classified = self.output_classification(X)
-            if self.verbose:
-                print(f"    --> classified: - {classified}")
-            return self.output_classification(X)
+            print(f"    --> classified: {classified}")
+            return classified
+
         return X
