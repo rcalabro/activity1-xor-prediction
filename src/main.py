@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from trainer import Trainer
 from neural_network import NeuralNetwork
 from analysis.plot_network import plot_network
-from analysis.metrics import confusion_matrix
+from analysis import confusion_matrix, plot_confusion_matrix, metrics
 
 def create_xor_nn(load_checkpoint=None, verbose=False):
     def xor_classification(pred):
@@ -65,11 +65,8 @@ def main():
 
     for case, pred, expected in zip(X_test, results, y_test):
         if plot:
-            plot_network(xor_nn, case, show=False, show_labels=True, width=600, height=400, title=f"XOR: {case} -> {pred} expected: {expected}")
+            plot_network(xor_nn, case, show_labels=True, width=600, height=400, title=f"XOR: {case} -> {pred} expected: {expected}")
         print(f"XOR: {case} -> {pred} {'✅' if pred == expected else '❌'} expected: {expected}")
-
-    if plot:
-        plt.show()
 
     print()
     print("🔹 Análise dos resultados\n")
@@ -77,6 +74,15 @@ def main():
 
     print("    -> Matriz de Confusão")
     print(matrix)
+    if plot:
+        plot_confusion_matrix(matrix, labels)
+
+    print("\n    -> Métricas")
+    print(f"accuracy: {metrics.accuracy(matrix)}")
+
+    # Show all plots
+    if plot:
+        plt.show()
 
 if __name__ == "__main__":
     def handle_exit(sig, frame):

@@ -28,7 +28,7 @@ def plot_network(nn,
                  show_tooltip=True,
                  show_labels=False,
                  title="Neural Network",
-                 show=True):
+                 show=False):
     """
     Desenha a rede neural 'nn', exibindo até um certo número de neurônios
     em cada camada (com truncamento). A opacidade das conexões representa o bias,
