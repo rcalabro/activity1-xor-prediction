@@ -25,7 +25,8 @@ Código-fonte da aplicação.
 
 - `main.py`: Script principal que executa a rede neural, realiza o treinamento (se necessário) e testa a saída para os casos da porta XOR.
 
-- `neural_network/`: Implementação da rede neural, visualização gráfica e funções de ativação.
+- `neural_network/`: Implementação da rede neural e funções de ativação.
+- `analysis/`: Métricas e visualização gráfica da rede neural.
 
 - `neural_network/trainer/`: Camada de treinamento, com suporte a múltiplas estratégias de execução e atualização.
 

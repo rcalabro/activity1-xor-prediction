@@ -104,4 +104,3 @@ Pesos e bias da rede são salvos em:
 
 Desenvolvido por **Renato Calabro**  
 🔗 [github.com/rcalabro/activity1-xor-prediction](https://github.com/rcalabro/activity1-xor-prediction)
-

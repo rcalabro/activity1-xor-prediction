@@ -46,7 +46,7 @@ O projeto é organizado de forma modular para separar responsabilidades:
 - 🧠 **NeuralNetwork**: Lida com estrutura da rede, ativação e forward pass
 - 🏋️ **Trainer**: Controla o processo de treinamento e execução
 - ⚙️ **Strategies**: Estratégias plugáveis de execução e de atualização de pesos
-- 📊 **Plot**: Visualização gráfica da rede neural
+- 📊 **Analysis**: Visualização gráfica e métricas da rede neural
 - 📁 **Docs**: Toda documentação da atividade e explicações técnicas
 - 💾 **Checkpoints**: Pesos salvos da rede para evitar reprocessamento
 - 🚀 **main.py**: Ponto de entrada da aplicação (treina ou testa a rede)
