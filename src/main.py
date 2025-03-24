@@ -4,7 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from trainer import Trainer
-from neural_network import NeuralNetwork, plot_network
+from neural_network import NeuralNetwork
+from analysis.plot_network import plot_network
 
 def create_xor_nn(load_checkpoint=None, verbose=False):
     def xor_classification(pred):
@@ -43,7 +44,7 @@ def train_xor(nn, X, y, epochs, target_error, learning_rate, save_checkpoint=Non
 
 
 def main():
-    plot = False
+    plot = True
     load_checkpoint = True
     checkpoint_path = "./checkpoints/xor_nn.npz"
 
