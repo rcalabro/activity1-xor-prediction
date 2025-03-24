@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from trainer import Trainer
 from neural_network import NeuralNetwork
 from analysis.plot_network import plot_network
-from analysis import confusion_matrix, plot_confusion_matrix, metrics
+from analysis import confusion_matrix, plot_confusion_matrix, metrics, plot_utils
 
 def create_xor_nn(load_checkpoint=None, verbose=False):
     def xor_classification(pred):
@@ -45,7 +45,7 @@ def train_xor(nn, X, y, epochs, target_error, learning_rate, save_checkpoint=Non
 
 
 def main():
-    plot = False
+    plot = True
     load_checkpoint = True
     checkpoint_path = "./checkpoints/xor_nn_sample.npz"
 
@@ -83,8 +83,10 @@ def main():
     print(f"recall      --> mean {metrics.mean_recall(matrix)} | classes {metrics.recall(matrix)}")
     print(f"f1_score    --> mean {metrics.mean_f1_score(matrix,average='weighted')} | classes {metrics.f1_score(matrix)}")
 
+
     # Show all plots
     if plot:
+        # plot_utils.export_plots("plots", prefix="fig")
         plt.show()
 
 if __name__ == "__main__":
