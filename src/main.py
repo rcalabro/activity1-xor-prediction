@@ -6,12 +6,15 @@ import matplotlib.pyplot as plt
 from trainer import Trainer
 from neural_network import NeuralNetwork, plot_network
 
-def create_xor_nn(verbose=False):
+def create_xor_nn(load_checkpoint=None, verbose=False):
     def xor_classification(pred):
         def toClass(value):
             return (value > 0.5).astype(int)
 
         return np.array([toClass(x[0]) for x in pred])
+
+    if load_checkpoint:
+        return NeuralNetwork.load_checkpoint(load_checkpoint, xor_classification, verbose=verbose)
 
     return NeuralNetwork(
         input_layer=2, # dois neuronios na camada de entrada
@@ -40,16 +43,20 @@ def train_xor(nn, X, y, epochs, target_error, learning_rate, save_checkpoint=Non
 
 
 def main():
-    plot = False
+    plot = True
+    load_checkpoint = True
+    checkpoint_path = "./checkpoints/xor_nn.npz"
 
     # para fins do exercicio o dataset de treino e teste serão os mesmo ja que os casos de XOR são 4 entradas diferentes somente
     X_train = X_test    =    [[0, 0],[0, 1],[1, 0],[1, 1]]
     y_train = y_test    =    [   [0],   [1],   [1],   [0]]
 
-    xor_nn = create_xor_nn(verbose=True)
-    train_xor(xor_nn, X_train, y_train,
-              epochs=1000, target_error=0.25, learning_rate=1,
-              save_checkpoint='./checkpoints/xor_nn.npz', verbose=True)
+    xor_nn = create_xor_nn(checkpoint_path if load_checkpoint else None, verbose=True)
+
+    if not load_checkpoint:
+        train_xor(xor_nn, X_train, y_train,
+                  epochs=1000, target_error=0.25, learning_rate=1,
+                  save_checkpoint=checkpoint_path, verbose=True)
 
     print("🔹 Testando Predições\n")
     results = xor_nn.predict(X_test)

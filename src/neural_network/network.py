@@ -47,8 +47,8 @@ class NeuralNetwork:
             print(f"    Camadas ocultas: {hidden_layers}")
             print(f"    Camada de saída: {output_layer} neurônios")
             print(f"    Função de ativação: {activation}")
-            print(f"    Pesos iniciais: {'Sim' if weights else 'RANDOM'}")
-            print(f"    Bias iniciais: {'Sim' if biases else 'RANDOM'}\n")
+            print(f"    Pesos iniciais: {'CHECKPOINT' if not weights is None else 'RANDOM'}")
+            print(f"    Bias iniciais: {'CHECKPOINT' if not biases is None else 'RANDOM'}\n")
         else:
             print(f"🔹 NeuralNetwork: [{input_layer}, {hidden_layers}, {output_layer}] | activation: {activation}\n")
 
@@ -88,7 +88,7 @@ class NeuralNetwork:
 
         # Inicializar pesos e bias (predefinidos ou aleatórios)
         for i in range(len(layer_sizes) - 1):
-            if weights and biases:  # Se foram fornecidos, verifica o formato e usa os valores passados
+            if weights is not None and biases is not None: # Se foram fornecidos, verifica o formato e usa os valores passados
                 if weights[i].shape != (layer_sizes[i], layer_sizes[i+1]):
                     raise ValueError(f"Formato inválido para pesos na camada {i+1}: "
                                      f"Esperado ({layer_sizes[i]}, {layer_sizes[i+1]}), "
@@ -113,6 +113,39 @@ class NeuralNetwork:
 
         if verbose:
             print("\n>>> Rede Neural Inicializada\n")
+
+    @staticmethod
+    def load_checkpoint(path, output_classification=None, verbose=False):
+        """
+        Carrega uma rede neural salva em checkpoint (.npz) e retorna a instância pronta.
+
+        Parâmetros:
+        - path: caminho para o arquivo .npz gerado com save_checkpoint
+        - verbose: se deve imprimir os logs de inicialização
+        - output_classification: função opcional de classificação final (ex: lambda x: x > 0.5)
+
+        Retorna:
+        - Instância de NeuralNetwork pronta para uso
+        """
+        data = np.load(path, allow_pickle=True)
+
+        input_layer = int(data["input_layer"])
+        hidden_layers = data["hidden_layers"].tolist()
+        output_layer = int(data["output_layer"])
+        activation = str(data["activation_func"])
+        weights = data["weights"]
+        biases = data["biases"]
+
+        return NeuralNetwork(
+            input_layer=input_layer,
+            hidden_layers=hidden_layers,
+            output_layer=output_layer,
+            activation=activation,
+            weights=weights,
+            biases=biases,
+            verbose=verbose,
+            output_classification=output_classification
+        )
 
     def predict(self, a):
         """
