@@ -65,3 +65,7 @@ O projeto é organizado de forma modular para separar responsabilidades:
 - 📁 **Docs**: Toda documentação da atividade e explicações técnicas
 - 💾 **Checkpoints**: Pesos salvos da rede para evitar reprocessamento
 - 🚀 **main.py**: Ponto de entrada da aplicação (treina ou testa a rede)
+
+---
+
+> ℹ️ A arquitetura representada no diagrama acima segue o modelo de um **Perceptron MultiCamadas (MLP)**, com conexões totalmente ligadas (fully connected) entre camadas e ativação não linear. Esse modelo é suficiente para resolver problemas não linearmente separáveis como o XOR.

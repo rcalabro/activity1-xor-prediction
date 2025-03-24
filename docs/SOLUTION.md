@@ -31,7 +31,9 @@ Uma rede neural com apenas **camadas lineares (sem não-linearidade)** não cons
 
 Ao incluir uma camada com dois neurônios e usar uma função de ativação não linear (como a sigmoide), a rede passa a conseguir “dobrar” o espaço de decisão. Isso permite que ela separe corretamente os casos da XOR, mesmo que eles não possam ser separados com uma linha reta.
 
-> Essa arquitetura `2-2-1` é a forma mais simples e eficiente de resolver a XOR com redes neurais.
+> Essa arquitetura `2-2-1` é uma forma simples e eficiente de resolver a XOR com redes neurais.
+>
+> Essa configuração é um exemplo clássico de uma **MLP (Multi-Layer Perceptron)** — um tipo de rede neural feedforward com camadas densas e ativação não linear. Esse tipo de rede é ideal para resolver problemas como a porta XOR, que não pode ser separada por uma linha reta (ou plano linear).
 
 ## 🧪 Função de Ativação: `sigmoid`
 
