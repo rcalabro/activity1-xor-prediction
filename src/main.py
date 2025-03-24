@@ -78,9 +78,10 @@ def main():
         plot_confusion_matrix(matrix, labels)
 
     print("\n    -> Métricas")
-    print(f"accuracy: {metrics.accuracy(matrix)}")
-    print(f"precision --> mean {metrics.mean_precision(matrix)} | classes {metrics.precision(matrix)}")
-    print(f"recall --> mean {metrics.mean_recall(matrix)} | classes {metrics.recall(matrix)}")
+    print(f"accuracy:            {metrics.accuracy(matrix)}")
+    print(f"precision   --> mean {metrics.mean_precision(matrix)} | classes {metrics.precision(matrix)}")
+    print(f"recall      --> mean {metrics.mean_recall(matrix)} | classes {metrics.recall(matrix)}")
+    print(f"f1_score    --> mean {metrics.mean_f1_score(matrix,average='weighted')} | classes {metrics.f1_score(matrix)}")
 
     # Show all plots
     if plot:

@@ -103,3 +103,58 @@ def mean_recall(matrix, average='macro'):
         return _weighted_mean(rec, support)
     else:
         raise ValueError("average deve ser 'macro' ou 'weighted'")
+
+
+def f1_score(matrix, cls=None):
+    """
+    Overview: Média harmônica entre precision e recall, balanceando os dois aspectos.
+    Casos bons para uso: Quando há desbalanceamento entre classes e você quer penalizar FP e FN igualmente.
+    Quando evitar: Quando você precisa priorizar fortemente precisão ou recall individualmente.
+
+    Args:
+        matrix: matriz de confusão
+        cls: índice da classe para retornar valor específico (opcional)
+
+    Returns:
+        f1-score por classe (array) ou de uma única classe (float)
+    """
+    prec = precision(matrix)
+    rec = recall(matrix)
+
+    with np.errstate(divide='ignore', invalid='ignore'):
+        f1 = 2 * (prec * rec) / (prec + rec)
+        f1 = np.nan_to_num(f1)
+
+    if cls is not None:
+        return f1[cls]
+
+    return f1
+
+def mean_f1_score(matrix, average='macro', penalty_fn=None):
+    """
+    Overview: Média do F1-score entre classes (macro ou ponderada).
+    Casos bons para uso: Comparações entre modelos com múltiplas classes, especialmente em conjuntos desbalanceados.
+    Quando evitar: Quando outras métricas específicas (como recall) são mais relevantes para o domínio.
+
+    Args:
+        matrix: matriz de confusão
+        average: 'macro' (média simples) ou 'weighted' (ponderada pelo suporte)
+        penalty_fn: função que recebe a matriz e retorna uma penalidade (float) a ser subtraída
+
+    Returns:
+        média do F1-score (float), com ou sem penalidade aplicada
+    """
+    f1 = f1_score(matrix)
+
+    if average == 'macro':
+        result = np.mean(f1)
+    elif average == 'weighted':
+        support = matrix.sum(axis=1)
+        result = _weighted_mean(f1, support)
+    else:
+        raise ValueError("average deve ser 'macro' ou 'weighted'")
+
+    if penalty_fn:
+        result -= penalty_fn(matrix)
+
+    return result
