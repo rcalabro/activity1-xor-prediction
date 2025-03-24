@@ -1,1 +1,2 @@
-docs/assets/Atividade_1-Redes_Neurais_Artificiais.pdf
+*.pdf binary
+checkpoints/** binary
