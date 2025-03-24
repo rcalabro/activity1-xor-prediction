@@ -80,6 +80,7 @@ def main():
     print("\n    -> Métricas")
     print(f"accuracy: {metrics.accuracy(matrix)}")
     print(f"precision --> mean {metrics.mean_precision(matrix)} | classes {metrics.precision(matrix)}")
+    print(f"recall --> mean {metrics.mean_recall(matrix)} | classes {metrics.recall(matrix)}")
 
     # Show all plots
     if plot:

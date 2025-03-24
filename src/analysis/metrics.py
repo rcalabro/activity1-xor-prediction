@@ -57,3 +57,49 @@ def mean_precision(matrix, average='macro'):
         return _weighted_mean(prec, support)
     else:
         raise ValueError("average deve ser 'macro' ou 'weighted'")
+
+
+def recall(matrix, cls=None):
+    """
+    Overview: Mede a proporção de positivos reais que foram corretamente identificados.
+    Casos bons para uso: Quando o custo de falsos negativos é alto (ex: fraudes, doenças).
+    Quando evitar: Quando falsos positivos são mais problemáticos do que falsos negativos.
+
+    Args:
+        matrix: matriz de confusão
+        cls: índice da classe para retornar valor específico (opcional)
+
+    Returns:
+        recall por classe (array) ou de uma única classe (float)
+    """
+    with np.errstate(divide='ignore', invalid='ignore'):
+        rec = np.diag(matrix) / matrix.sum(axis=1)
+        rec = np.nan_to_num(rec)
+
+    if cls is not None:
+        return rec[cls]
+
+    return rec
+
+
+def mean_recall(matrix, average='macro'):
+    """
+    Overview: Média da recall entre classes (macro ou ponderada).
+    Casos bons para uso: Para obter uma medida geral de cobertura do modelo sobre as classes reais.
+
+    Args:
+        matrix: matriz de confusão
+        average: 'macro' (média simples) ou 'weighted' (ponderada pelo suporte)
+
+    Returns:
+        média da recall (float)
+    """
+    rec = recall(matrix)
+
+    if average == 'macro':
+        return np.mean(rec)
+    elif average == 'weighted':
+        support = matrix.sum(axis=1)
+        return _weighted_mean(rec, support)
+    else:
+        raise ValueError("average deve ser 'macro' ou 'weighted'")
